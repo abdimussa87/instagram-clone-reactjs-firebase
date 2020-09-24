@@ -1,0 +1,30 @@
+.post{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    max-width: 500px;
+    border: 1px solid lightgray;
+    margin: 10px auto;
+}
+.post__header{
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+.post__avatar{
+    margin-right: 10px;
+}
+.post__body{
+    display: flex;
+    flex-direction: column;
+}
+.post__image{
+    width: 100%;
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    object-fit: contain;
+}
+.post__info{
+    display: flex;
+    padding: 15px;
+}
