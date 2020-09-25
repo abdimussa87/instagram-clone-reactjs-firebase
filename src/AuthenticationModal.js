@@ -37,8 +37,9 @@ function AuthenticationModal({ open, handleClose, signingIn }) {
     const signUp = (e) => {
         e.preventDefault();
         auth.createUserWithEmailAndPassword(email, password)
-            .then(authUser =>
-                authUser.user.updateProfile({ displayName: username })
+            .then(authUser =>{
+              return  authUser.user.updateProfile({ displayName: username });
+            }
             )
             .catch(err => alert(err.message));
             handleClose();

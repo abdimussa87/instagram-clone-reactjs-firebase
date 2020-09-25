@@ -5,6 +5,8 @@ import Post from './Post';
 import { auth, db } from './firebase'
 import AuthenticationModal from './AuthenticationModal';
 import ImageUpload from './ImageUpload';
+import InstagramEmbed from 'react-instagram-embed';
+
 function App() {
 
   const [posts, setPosts] = useState([]);
@@ -17,6 +19,8 @@ function App() {
       if (authUser) {
         // *user is logged in
         console.log(authUser);
+       
+
         setUser(authUser);
       } else {
         setUser(null);
@@ -32,7 +36,7 @@ function App() {
 
   // * for loading posts from firebase
   useEffect(() => {
-    db.collection('posts').orderBy('timestamp','desc').onSnapshot(snapshot => {
+    db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
       setPosts(snapshot.docs.map(doc => {
         return { id: doc.id, post: doc.data() }
       }));
@@ -40,7 +44,7 @@ function App() {
 
   }, [])
 
-  const postComponents = posts.map(({ id, post }) => <Post key={id} username={post.username}
+  const postComponents = posts.map(({ id, post }) => <Post key={id} currentUser={user} postId={id} username={post.username}
     userImage={post.userImage}
     postImageUrl={post.postImageUrl}
     imageCaption={post.imageCaption} />)
@@ -61,13 +65,28 @@ function App() {
         openModal();
       }} />
 
-      {postComponents}
-
+      <div className="app__container">
+        <div className="app__left"> {postComponents}</div>
+        <div className="app__right"><InstagramEmbed
+        url='https://www.instagram.com/p/CFeWVBHApHS/'
+        maxWidth={320}
+        hideCaption={false}
+        containerTagName='div'
+        protocol=''
+        injectScript
+        onLoading={() => { }}
+        onSuccess={() => { }}
+        onAfterRender={() => { }}
+        onFailure={() => { }}
+      /></div>
+      </div>
+     
+      
       {user ?
-        (<ImageUpload username={user?.displayName} />
+        (<ImageUpload user={user} />
         )
         :
-        <h3 style={{margin:40 +'px'}}>Login to upload</h3>
+        <h3 style={{ margin: 40 + 'px' }}>Login to upload</h3>
       }
 
     </div>

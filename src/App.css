@@ -4,3 +4,12 @@
   background-color: #fafafa;
   
 }
+
+.app__container{
+  display: flex;
+  justify-content: center;
+
+}
+.app__right{
+ padding: 10px;
+}

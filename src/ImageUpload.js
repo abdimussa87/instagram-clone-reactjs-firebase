@@ -4,7 +4,7 @@ import './ImageUpload.css';
 import {storage,db} from './firebase';
 import firebase from 'firebase';
 
-function ImageUpload({username}) {
+function ImageUpload({user}) {
 
     const [caption,setCaption] = useState('');
     const [image,setImage] = useState(null);
@@ -18,6 +18,9 @@ function ImageUpload({username}) {
     }  
 
     const handleUpload=()=>{
+        if(image===null || caption===''){
+          return  alert('Please include both image and caption to upload');
+        }
         const uploadTask = storage.ref(`images/${image.name}`).put(image);
         uploadTask.on(
             "state_changed",
@@ -43,15 +46,15 @@ function ImageUpload({username}) {
                     
                     db.collection('posts').add({
                         imageCaption:caption,
-                        username:username,
+                        username:user?.displayName,
                         userImage:'',
                         postImageUrl:URL,
                         timestamp:firebase.firestore.FieldValue.serverTimestamp()
                     });
+                    setProgress(0);
+                    setCaption('');
+                    setImage(null);
                 });
-                setProgress(0);
-                setCaption('');
-                setImage(null);
             }
             )
     }
