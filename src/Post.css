@@ -28,3 +28,6 @@
     display: flex;
     padding: 15px;
 }
+.post__info > p{
+    margin-left: 5px;
+}

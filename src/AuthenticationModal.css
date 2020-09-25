@@ -1,0 +1,4 @@
+.authenticationModal__form{
+    display: flex;
+    flex-direction: column;
+}
